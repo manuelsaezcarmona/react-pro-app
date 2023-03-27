@@ -30,9 +30,20 @@ en compras, ventas, usuarios etc... */
 
 // 1 - creacmos una funcion que Importe este componente con el metodo lazy de React.
 // Nota para trabajar con lazy los componentes se deben de exportar por defecto
-const Lazy1 = lazy(() => import("../01-lazyload/pages/LazyPage1"));
-const Lazy2 = lazy(() => import("../01-lazyload/pages/LazyPage2"));
-const Lazy3 = lazy(() => import("../01-lazyload/pages/LazyPage3"));
+// Para cambiar los nombres de los chunks debes de usar el patron de los asteriscos para que los
+// interprete webpack
+const Lazy1 = lazy(
+  () =>
+    import(/*webpackChunkName: "LazyPage1"*/ "../01-lazyload/pages/LazyPage1")
+);
+const Lazy2 = lazy(
+  () =>
+    import(/*webpackChunkName: "LazyPage2"*/ "../01-lazyload/pages/LazyPage2")
+);
+const Lazy3 = lazy(
+  () =>
+    import(/*webpackChunkName: "LazyPage3"*/ "../01-lazyload/pages/LazyPage3")
+);
 
 // Ahora el componente lazy es un LazyComponent React.LazyExoticComponent<() => JSX.Element>
 
