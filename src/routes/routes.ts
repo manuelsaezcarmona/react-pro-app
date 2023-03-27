@@ -1,5 +1,6 @@
 import { LazyPage1, LazyPage2, LazyPage3 } from "../01-lazyload/pages";
 import { lazy, LazyExoticComponent } from "react";
+import { NoLazy } from "../01-lazyload/pages/NoLazy";
 
 /*  En cel interface mi component puede ser de 2 tipos: 
  () => JSX.Element o React.LazyExoticComponent<() => JSX.Element> 
@@ -32,9 +33,11 @@ en compras, ventas, usuarios etc... */
 // Nota para trabajar con lazy los componentes se deben de exportar por defecto
 // Para cambiar los nombres de los chunks debes de usar el patron de los asteriscos para que los
 // interprete webpack
-const Lazy1 = lazy(
+const LazyLayout = lazy(
   () =>
-    import(/*webpackChunkName: "LazyPage1"*/ "../01-lazyload/pages/LazyPage1")
+    import(
+      /*webpackChunkName: "LazyLayout"*/ "../01-lazyload/layout/LazyLayout"
+    )
 );
 const Lazy2 = lazy(
   () =>
@@ -47,23 +50,21 @@ const Lazy3 = lazy(
 
 // Ahora el componente lazy es un LazyComponent React.LazyExoticComponent<() => JSX.Element>
 
+/* Rutas anidadas - Nested Routes - 
+  la prop 'to' tiene que mantener una parte fija que sera la que indique que estamos en una ruta anidada
+*/
+
 export const routes: Route[] = [
   {
-    to: "/lazy1",
-    path: "lazy1",
-    Component: Lazy1,
-    name: "Lazy - 1",
+    to: `/lazyload/`,
+    path: `/lazyload/*`,
+    Component: LazyLayout,
+    name: "Lazy - DashBoard",
   },
   {
-    to: "/lazy2",
-    path: "lazy2",
-    Component: Lazy2,
-    name: "Lazy - 2",
-  },
-  {
-    to: "/lazy3",
-    path: "lazy3",
-    Component: Lazy3,
-    name: "Lazy - 3",
+    to: "/no-lazy",
+    path: "no-lazy",
+    Component: NoLazy,
+    name: "No lazy",
   },
 ];
