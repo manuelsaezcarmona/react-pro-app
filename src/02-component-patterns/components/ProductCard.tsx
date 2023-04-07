@@ -1,11 +1,9 @@
 import styles from "../styles/styles.module.css";
+import { ReactElement } from "react";
 
 import { useProduct } from "../hooks/useProduct";
 import { createContext } from "react";
-import {
-  ProductCardProps,
-  ProductContextProps,
-} from "../interfaces/interfaces";
+import { Product, ProductContextProps } from "../interfaces/interfaces";
 // import { ProductTitle, ProductImage, ProductButtons } from "./index";
 // 1.1 Definir en la interface que reciba children
 // 1.2 children, puede tener un elemento o varios , por eso tambien indicamos que puede ser un array de children
@@ -21,12 +19,22 @@ Para conseguir esto debemos de realizar:
  1.1 Definir en la interface que reciba children
 */
 
-export const ProductCard = ({ children, product }: ProductCardProps) => {
+export interface ProductCardProps {
+  children?: ReactElement | ReactElement[];
+  product: Product;
+  className?: string;
+}
+
+export const ProductCard = ({
+  children,
+  product,
+  className,
+}: ProductCardProps) => {
   const { counter, increaseBy } = useProduct();
 
   return (
     <Provider value={{ counter, increaseBy, product }}>
-      <div className={styles.productCard}>
+      <div className={`${styles.productCard} ${className}`}>
         {children}
         {/* <ProductImage img={product.img} />
 
