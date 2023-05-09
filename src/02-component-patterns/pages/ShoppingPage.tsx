@@ -20,35 +20,7 @@ manera
 
 export const ShoppingPage = () => {
   const { onProductCountChange, shoppingCart } = useShoppingCart();
-  /*   Antiguo onChange 
 
-const onProductCountChange = ({
-    count,
-    product,
-  }: {
-    count: number;
-    product: Product;
-  }) => {
-    setShoppingCard((oldShopingCart) => {
-      //  console.log("count", count);
-      if (count === 0) {
-        // Eliminacion de objetos mediante desuctructuracion, por un lado la propiedad (objeto que quiero eliminar)
-        // y el resto del objeto
-        const { [product.id]: toDelete, ...rest } = oldShopingCart;
-        // console.log("deleted", toDelete);
-
-        return rest;
-      }
-
-      return {
-        ...oldShopingCart,
-        [product.id]: { ...product, count },
-      };
-    });
-    // console.log("onProdcutCountChange", count, product);
-  }; */
-
-  // console.log("shoppingCart", Object.entries(shoppingCart));
   return (
     <div>
       <h1>Shopping Store</h1>
