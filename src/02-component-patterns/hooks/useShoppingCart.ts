@@ -19,22 +19,20 @@ export const useShoppingCart = () => {
     product: Product;
   }) => {
     setShoppingCard((oldShopingCart) => {
-      const productInCard: ProductInCart = oldShopingCart[product.id] || {
-        ...product,
-        count: 0,
-      };
-
-      // funcion incrementar
-      if (Math.max(productInCard.count + count, 0) > 0) {
-        productInCard.count += count;
-        return { ...oldShopingCart, [product.id]: productInCard };
+      if (count === 0) {
+        const { [product.id]: toDelete, ...rest } = oldShopingCart;
+        return rest;
       }
 
-      // Borrar el producto
-      const { [product.id]: toDelete, ...rest } = oldShopingCart;
-      return { ...rest };
+      return {
+        ...oldShopingCart,
+        [product.id]: { ...product, count },
+      };
     });
   };
 
-  return { shoppingCart, onProductCountChange };
+  return {
+    shoppingCart,
+    onProductCountChange,
+  };
 };
