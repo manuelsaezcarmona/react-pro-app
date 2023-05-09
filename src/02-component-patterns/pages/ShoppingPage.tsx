@@ -6,26 +6,10 @@ import {
 } from "../components";
 
 import "../styles/custom-styles.css";
-import { Product } from "../interfaces/interfaces";
-import { useState } from "react";
+import { products } from "../data/products";
 
-const product1 = {
-  id: "1",
-  title: "Coffee Mug Card",
-  img: "./coffee-mug.png",
-};
+import { useShoppingCart } from "../hooks/useShoppingCart";
 
-const product2 = {
-  id: "2",
-  title: "Coffee Mug Meme",
-  img: "./coffee-mug2.png",
-};
-
-const products: Product[] = [product1, product2];
-
-interface ProductInCart extends Product {
-  count: number;
-}
 /* Como plantilla para realizar el interface , el ProductInCart seria de la siguiente
 manera 
       {
@@ -35,14 +19,7 @@ manera
 */
 
 export const ShoppingPage = () => {
-  /* Voy usar un estado del carrito, lo defino como un objeto 
-    con la id del producto como propiedad en vez de un array para poder acceder
-    a las propiedades */
-
-  const [shoppingCart, setShoppingCard] = useState<{
-    [key: string]: ProductInCart;
-  }>({});
-
+  const { onProductCountChange, shoppingCart } = useShoppingCart();
   /*   Antiguo onChange 
 
 const onProductCountChange = ({
@@ -70,31 +47,6 @@ const onProductCountChange = ({
     });
     // console.log("onProdcutCountChange", count, product);
   }; */
-
-  const onProductCountChange = ({
-    count,
-    product,
-  }: {
-    count: number;
-    product: Product;
-  }) => {
-    setShoppingCard((oldShopingCart) => {
-      const productInCard: ProductInCart = oldShopingCart[product.id] || {
-        ...product,
-        count: 0,
-      };
-
-      // funcion incrementar
-      if (Math.max(productInCard.count + count, 0) > 0) {
-        productInCard.count += count;
-        return { ...oldShopingCart, [product.id]: productInCard };
-      }
-
-      // Borrar el producto
-      const { [product.id]: toDelete, ...rest } = oldShopingCart;
-      return { ...rest };
-    });
-  };
 
   // console.log("shoppingCart", Object.entries(shoppingCart));
   return (
