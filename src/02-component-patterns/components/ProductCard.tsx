@@ -3,7 +3,11 @@ import { CSSProperties, ReactElement } from "react";
 
 import { useProduct } from "../hooks/useProduct";
 import { createContext } from "react";
-import { Product, ProductContextProps } from "../interfaces/interfaces";
+import {
+  onChangeArgs,
+  Product,
+  ProductContextProps,
+} from "../interfaces/interfaces";
 // import { ProductTitle, ProductImage, ProductButtons } from "./index";
 // 1.1 Definir en la interface que reciba children
 // 1.2 children, puede tener un elemento o varios , por eso tambien indicamos que puede ser un array de children
@@ -24,6 +28,8 @@ export interface ProductCardProps {
   product: Product;
   className?: string;
   style?: CSSProperties;
+  onChange?: (args: onChangeArgs) => void;
+  value?: number;
 }
 
 export const ProductCard = ({
@@ -31,8 +37,10 @@ export const ProductCard = ({
   product,
   className,
   style,
+  onChange,
+  value,
 }: ProductCardProps) => {
-  const { counter, increaseBy } = useProduct();
+  const { counter, increaseBy } = useProduct({ onChange, product, value });
 
   return (
     <Provider value={{ counter, increaseBy, product }}>
